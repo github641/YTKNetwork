@@ -31,6 +31,9 @@
 #endif
 
 @implementation YTKNetworkConfig {
+    /* lzy注170714：
+     全局变量，url过滤器和缓存文件夹路径过滤器
+     */
     NSMutableArray<id<YTKUrlFilterProtocol>> *_urlFilters;
     NSMutableArray<id<YTKCacheDirPathFilterProtocol>> *_cacheDirPathFilters;
 }
