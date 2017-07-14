@@ -34,6 +34,9 @@
 #import "AFNetworking.h"
 #endif
 
+/* lzy注170714：
+ 自定义的 ytk请求有效性 错误域名
+ */
 NSString *const YTKRequestValidationErrorDomain = @"com.yuantiku.request.validation";
 
 @interface YTKBaseRequest ()
@@ -110,20 +113,30 @@ NSString *const YTKRequestValidationErrorDomain = @"com.yuantiku.request.validat
 
 #pragma mark - Request Action
 /* lzy注170713：
- start方法中会调用网络请求的类YTKNetworkAgent和当前类的扩展（定义在YTKNetworkPrivate类中）来实现进程的代理形式调用
+ 1、当前类的扩展（定义在YTKNetworkPrivate类中）来实现进程的代理形式调用
+ 2、调用网络请求的类YTKNetworkAgent。
  */
 - (void)start {
     [self toggleAccessoriesWillStartCallBack];
     [[YTKNetworkAgent sharedAgent] addRequest:self];
 }
-
+/* lzy注170714：
+ 停止reqest方法。
+ 1、当前类的扩展，通知配件request将要取消、已经取消
+ 2、本类代理置空
+ 3、调用网络请求工具类YTKNetworkAgent进行取消
+ */
 - (void)stop {
     [self toggleAccessoriesWillStopCallBack];
     self.delegate = nil;
     [[YTKNetworkAgent sharedAgent] cancelRequest:self];
     [self toggleAccessoriesDidStopCallBack];
 }
-
+/* lzy注170714：
+ 快捷得开启一个请求并以block作为回调的方法。
+ 1、持有blocks
+ 2、调用本类的start方法
+ */
 - (void)startWithCompletionBlockWithSuccess:(YTKRequestCompletionBlock)success
                                     failure:(YTKRequestCompletionBlock)failure {
     [self setCompletionBlockWithSuccess:success failure:failure];
@@ -131,7 +144,9 @@ NSString *const YTKRequestValidationErrorDomain = @"com.yuantiku.request.validat
 }
 
 #pragma mark - Subclass Override
-
+/* lzy注170714：
+ 以下是子类需要重写的方法。并对一些有返回值的方法，设定了初始值。
+ */
 - (void)requestCompletePreprocessor {
 }
 
@@ -210,7 +225,9 @@ NSString *const YTKRequestValidationErrorDomain = @"com.yuantiku.request.validat
 }
 
 #pragma mark - NSObject
-
+/* lzy注170714：
+ 重写了description方法，提供本类更多信息
+ */
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@: %p>{ URL: %@ } { method: %@ } { arguments: %@ }", NSStringFromClass([self class]), self, self.currentRequest.URL, self.currentRequest.HTTPMethod, self.requestArgument];
 }
