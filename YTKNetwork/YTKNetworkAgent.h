@@ -20,7 +20,14 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-
+/* lzy注170713：
+ 网络请求的单例，内部的请求是通过AFHTTPSessionManager来发出的。其中
+ 
+ (void)addRequest:(YTKBaseRequest *)request
+ 接口会将当前请求启动，并记录下这次请求的信息。
+ 
+ 断点继续下载：此类保存了上次下载未完成的文件，再次下载同一个文件时，优先考虑继续上次下载的位置。
+ */
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN

@@ -20,7 +20,9 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-
+/* lzy注170713：
+ 实现批量请求，并YTKBatchRequestAgent通过管理（添加和删除）所有请求，当批量请求开始时将遍历YTKBatchRequestAgent保存的所有请求，逐个开始。 遗憾的是，这里的源码并没有对并发的线程做任何管理，如并发数目等限制。
+ */
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN

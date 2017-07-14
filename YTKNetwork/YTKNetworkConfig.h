@@ -20,7 +20,9 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-
+/* lzy注170713：
+ 使用了YTKNetwork发起请求的所有请求的统一配置中心，这里可以配置如统一的参数过滤、baseurl、cdnurl等。
+ */
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN

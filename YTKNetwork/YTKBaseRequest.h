@@ -22,7 +22,9 @@
 //  THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-
+/* lzy注170713：
+ 1. 这个类头文件从NS_ASSUME_NONNULL_BEGIN开始，表示到NS_ASSUME_NONNULL_END之间的所有简单指针对象都被假定为nonnull。
+ */
 NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT NSString *const YTKRequestValidationErrorDomain;
@@ -74,7 +76,11 @@ typedef void (^AFURLSessionTaskProgressBlock)(NSProgress *);
 @class YTKBaseRequest;
 
 typedef void(^YTKRequestCompletionBlock)(__kindof YTKBaseRequest *request);
-
+    
+    
+    /* lzy注170713：
+     定义了两个协议YTKRequestDelegate 和YTKRequestAccessory，用来跟踪请求的进程
+     */
 ///  The YTKRequestDelegate protocol defines several optional methods you can use
 ///  to receive network-related messages. All the delegate methods will be called
 ///  on the main queue.
@@ -241,10 +247,10 @@ typedef void(^YTKRequestCompletionBlock)(__kindof YTKBaseRequest *request);
 ///=============================================================================
 
 ///  Append self to request queue and start the request.
-- (void)start;
+- (void)start;// -> 调用 YTKNetworkAgent 的 addRequest: 方法
 
 ///  Remove self from request queue and cancel the request.
-- (void)stop;
+- (void)stop;// -> 调用 YTKNetworkAgent 的 cancelRequest: 方法
 
 ///  Convenience method to start the request with block callbacks.
 - (void)startWithCompletionBlockWithSuccess:(nullable YTKRequestCompletionBlock)success
@@ -255,7 +261,9 @@ typedef void(^YTKRequestCompletionBlock)(__kindof YTKBaseRequest *request);
 ///=============================================================================
 /// @name Subclass Override
 ///=============================================================================
-
+/* lzy注170713：
+ 定义了一系列子类需要覆盖的方法，并且在m文件中将这些方法都写出并带有返回值，避免子类不覆盖这些方法，内部又调用到这些方法时造成找不到selector的crash
+ */
 ///  Called on background thread after request succeded but before switching to main thread. Note if
 ///  cache is loaded, this method WILL be called on the main thread, just like `requestCompleteFilter`.
 - (void)requestCompletePreprocessor;

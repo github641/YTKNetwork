@@ -36,13 +36,13 @@ FOUNDATION_EXPORT void YTKLog(NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
 @class AFHTTPSessionManager;
 
 @interface YTKNetworkUtils : NSObject
-
+// 验证json的有效性
 + (BOOL)validateJSON:(id)json withValidator:(id)jsonValidator;
-
+ // 阻止 iTunes 在应用中保存数据
 + (void)addDoNotBackupAttribute:(NSString *)path;
-
+// 对字符串进行 md5 加密
 + (NSString *)md5StringFromString:(NSString *)string;
-
+// 获取 app 的版本号
 + (NSString *)appVersionString;
 
 + (NSStringEncoding)stringEncodingWithRequest:(YTKBaseRequest *)request;

@@ -20,7 +20,9 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-
+/* lzy注170713：
+ 链式请求，也就是请求之间互相依赖，串行发出。和批量请求相似的，通过一个YTKBatchRequestAgent来管理这些依赖的请求。内部通过_nextRequestIndex来索引正在进行和下一个将要处理的请求，每次上一个请求成功回调回来，才开始下一个链式的请求
+ */
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN

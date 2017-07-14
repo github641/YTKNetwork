@@ -26,7 +26,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT NSString *const YTKRequestCacheErrorDomain;
-
+/* lzy注170713：
+ 使用负数来逐个枚举值，这样代码中可能通过是否<0 ,就可以最快判断是否有错误
+ */
 NS_ENUM(NSInteger) {
     YTKRequestCacheErrorExpired = -1,
     YTKRequestCacheErrorVersionMismatch = -2,
@@ -36,7 +38,9 @@ NS_ENUM(NSInteger) {
     YTKRequestCacheErrorInvalidMetadata = -6,
     YTKRequestCacheErrorInvalidCacheData = -7,
 };
-
+    /* lzy注170713：
+     继承自YTKBaseRequest，并额外实现了 缓存的存储和读取
+     */
 ///  YTKRequest is the base class you should inherit to create your own request class.
 ///  Based on YTKBaseRequest, YTKRequest adds local caching feature. Note download
 ///  request will not be cached whatsoever, because download request may involve complicated

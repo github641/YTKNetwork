@@ -232,7 +232,7 @@
         }
     }
 
-    // Retain request
+    // Retain request 持有住request，并发出网络请求
     YTKLog(@"Add request: %@", NSStringFromClass([request class]));
     [self addRequestToRecord:request];
     [request.requestTask resume];

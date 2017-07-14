@@ -32,7 +32,9 @@
 #endif
 
 NSString *const YTKRequestCacheErrorDomain = @"com.yuantiku.request.caching";
-
+/* lzy注170713：
+ 定义了一个优先级低的线程的串行队列，保证所有请求在这个线程中, 将用于将缓存写入文件时使用，保证不占用cpu主线程资源，即使多个请求并发，也会使用这个标识了统一符号的同一个线程，避免了使用过多子线程，同样占用过多资源。
+ */
 static dispatch_queue_t ytkrequest_cache_writing_queue() {
     static dispatch_queue_t queue;
     static dispatch_once_t onceToken;
@@ -48,6 +50,17 @@ static dispatch_queue_t ytkrequest_cache_writing_queue() {
 }
 
 @interface YTKCacheMetadata : NSObject<NSSecureCoding>
+/* lzy注170713：
+ 遵守了NSSecureCoding的缓存的元数据类YTKCacheMetadata。NSSecureCoding有何用？
+ NSCoding是iOS上把模型对象直接转变成一个文件，然后再把这个文件重新加载到内存里一种极其简单和方便的方式，它并不需要任何文件解析和序列化的逻辑。如果要把对象保存到一个数据文件中（假设这个对象实现了NSCoding协议），那么你可以像下面这样做：
+ [NSKeyedArchiver archiveRootObject:xxx toFile:someFile];
+ XXX *xxx = [NSKeyedUnarchiver unarchiveObjectWithFile:someFile];
+ 
+ 这样做对于编译进APP里的mainbundle中的资源（nib等）来说是可以的，但是使用NSCoding来读写用户数据文件的问题在于，把全部的类编码到一个文件里，也就间接地给了这个文件访问你APP里面实例类的权限，存在安全风险。苹果引入了基于NSCoding的NSSecureCoding。除了在解码时要同时指定key和要解码的对象的类，如果要求的类和从文件中解码出的对象的类不匹配，NSCoder会抛出异常，告诉你数据已经被篡改了。
+ 
+ 
+ */
+
 
 @property (nonatomic, assign) long long version;
 @property (nonatomic, strong) NSString *sensitiveDataString;

@@ -25,6 +25,9 @@
 #import "YTKNetworkAgent.h"
 #import "YTKNetworkPrivate.h"
 
+/* lzy注170713：
+ 通过__has_include判断AFNetworking的引入方式是framework还是源码，来决定import时使用<>还是""
+ */
 #if __has_include(<AFNetworking/AFNetworking.h>)
 #import <AFNetworking/AFNetworking.h>
 #else
@@ -89,7 +92,9 @@ NSString *const YTKRequestValidationErrorDomain = @"com.yuantiku.request.validat
     self.successCompletionBlock = success;
     self.failureCompletionBlock = failure;
 }
-
+/* lzy注170713：
+ 在适当时刻清除作为内部属性block强引用外部的实例，可能提高内存利用率，减少长期占用
+ */
 - (void)clearCompletionBlock {
     // nil out to break the retain cycle.
     self.successCompletionBlock = nil;
@@ -104,7 +109,9 @@ NSString *const YTKRequestValidationErrorDomain = @"com.yuantiku.request.validat
 }
 
 #pragma mark - Request Action
-
+/* lzy注170713：
+ start方法中会调用网络请求的类YTKNetworkAgent和当前类的扩展（定义在YTKNetworkPrivate类中）来实现进程的代理形式调用
+ */
 - (void)start {
     [self toggleAccessoriesWillStartCallBack];
     [[YTKNetworkAgent sharedAgent] addRequest:self];
