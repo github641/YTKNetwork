@@ -36,6 +36,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///  YTKNetworkAgent is the underlying class that handles actual request generation,
 ///  serialization and response handling.
+/* lzy注170714：
+ 本类是实际处理请求生命周期的基本类。
+ 并对序列化和响应做了处理。
+ */
 @interface YTKNetworkAgent : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -45,12 +49,21 @@ NS_ASSUME_NONNULL_BEGIN
 + (YTKNetworkAgent *)sharedAgent;
 
 ///  Add request to session and start it.
+/* lzy注170714：
+ 把请求添加到session中，并启动它
+ */
 - (void)addRequest:(YTKBaseRequest *)request;
 
 ///  Cancel a request that was previously added.
+/* lzy注170714：
+ 取消之前添加的请求
+ */
 - (void)cancelRequest:(YTKBaseRequest *)request;
 
 ///  Cancel all requests that were previously added.
+/* lzy注170714：
+ 取消之前添加的所有请求
+ */
 - (void)cancelAllRequests;
 
 ///  Return the constructed URL of request.
@@ -58,6 +71,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///  @param request The request to parse. Should not be nil.
 ///
 ///  @return The result URL.
+/* lzy注170714：
+ 返回一个构造好的请求URL。
+ 需要解析的请求，传入值不能为nil。
+ */
 - (NSString *)buildRequestUrl:(YTKBaseRequest *)request;
 
 @end
