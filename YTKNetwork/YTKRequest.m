@@ -222,7 +222,7 @@ static dispatch_queue_t ytkrequest_cache_writing_queue() {
 
 #pragma mark - Network Request Delegate
 /* lzy注170713：
- 请求完成处理器方法
+ 请求完成处理方法
  1、调用父类方法
  2、缓存数据写入磁盘
  writeCacheAsynchronously默认值YES，缓存写入存储的操作是否是异步的。

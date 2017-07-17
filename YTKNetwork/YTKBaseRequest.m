@@ -96,7 +96,8 @@ NSString *const YTKRequestValidationErrorDomain = @"com.yuantiku.request.validat
     self.failureCompletionBlock = failure;
 }
 /* lzy注170713：
- 在适当时刻清除作为内部属性block强引用外部的实例，可能提高内存利用率，减少长期占用
+ 在适当时刻清除作为内部属性block强引用外部的实例，可能提高内存利用率，减少长期占用。
+ 并使得开发者外部使用可以直接使用self，不必担心引用循环问题。
  */
 - (void)clearCompletionBlock {
     // nil out to break the retain cycle.
