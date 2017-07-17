@@ -58,10 +58,23 @@
     return sharedInstance;
 }
 
+/* lzy注170717：
+ YTK实际请求管理类的初始化。
+ 1、获取配置对象YTKNetworkConfig
+ 2、创建AFHTTPSessionManager实例，使用的配置是前一步获取的config对象
+ 3、创建一个管理请求记录的字典
+ 4、创建一个并发队列，并设置给AFHTTPSessionManager实例的completionQueue回调队列
+ 5、创建请求的可接受码 100-499，responseSerializer的可接受状态吗设置为此。
+ 6、创建互斥锁
+ 7、设置AFHTTPSessionManager实例的securityPolicy、responseSerializer为二进制、completionQueue为创建的并发队列
+ */
 - (instancetype)init {
     self = [super init];
     if (self) {
+  
         _config = [YTKNetworkConfig sharedConfig];
+        
+        
         _manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:_config.sessionConfiguration];
         _requestsRecord = [NSMutableDictionary dictionary];
         _processingQueue = dispatch_queue_create("com.yuantiku.networkagent.processing", DISPATCH_QUEUE_CONCURRENT);
@@ -76,7 +89,9 @@
     }
     return self;
 }
-
+/* lzy注170717：
+ jsonResponseSerializer懒加载
+ */
 - (AFJSONResponseSerializer *)jsonResponseSerializer {
     if (!_jsonResponseSerializer) {
         _jsonResponseSerializer = [AFJSONResponseSerializer serializer];
@@ -85,7 +100,9 @@
     }
     return _jsonResponseSerializer;
 }
-
+/* lzy注170717：
+ xmlParserResponseSerialzier懒加载
+ */
 - (AFXMLParserResponseSerializer *)xmlParserResponseSerialzier {
     if (!_xmlParserResponseSerialzier) {
         _xmlParserResponseSerialzier = [AFXMLParserResponseSerializer serializer];
@@ -95,7 +112,15 @@
 }
 
 #pragma mark -
-
+/* lzy注170717：
+ 返回一个构造好的请求URL。
+ 需要解析的请求，传入值不能为nil。
+ 1、若传入的request是nil，触发『断言』
+ 2、若request.requestUrl是有效的请求地址，直接返回该地址。若不是则next
+ 3、拼接请求的相对路径。若cofig中的urlFilters数组有值，遍历并调用YTKUrlFilterProtocol协议方法来拼接url。
+ 4、得到baseURL。优先取传入的request对象中，对cdn和baseURL配置，若取不到则取config对象中的配置。 
+ 5、相对url与baseURL 拼接并返回。
+ */
 - (NSString *)buildRequestUrl:(YTKBaseRequest *)request {
     NSParameterAssert(request != nil);
 
