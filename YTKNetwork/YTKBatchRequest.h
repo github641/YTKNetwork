@@ -22,6 +22,38 @@
 //  THE SOFTWARE.
 /* lzy注170713：
  实现批量请求，并YTKBatchRequestAgent通过管理（添加和删除）所有请求，当批量请求开始时将遍历YTKBatchRequestAgent保存的所有请求，逐个开始。 遗憾的是，这里的源码并没有对并发的线程做任何管理，如并发数目等限制。
+ 
+ YTKBatchRequest 类：用于方便地发送批量的网络请求，YTKBatchRequest 是一个容器类，它可以放置多个 YTKRequest 子类，并统一处理这多个网络请求的成功和失败。
+ 
+ 在如下的示例中，我们发送了 4 个批量的请求，并统一处理这 4 个请求同时成功的回调。
+ 
+ #import "YTKBatchRequest.h"
+ #import "GetImageApi.h"
+ #import "GetUserInfoApi.h"
+ 
+ - (void)sendBatchRequest {
+ GetImageApi *a = [[GetImageApi alloc] initWithImageId:@"1.jpg"];
+ GetImageApi *b = [[GetImageApi alloc] initWithImageId:@"2.jpg"];
+ GetImageApi *c = [[GetImageApi alloc] initWithImageId:@"3.jpg"];
+ GetUserInfoApi *d = [[GetUserInfoApi alloc] initWithUserId:@"123"];
+ 
+ YTKBatchRequest *batchRequest = [[YTKBatchRequest alloc] initWithRequestArray:@[a, b, c, d]];
+ 
+ [batchRequest startWithCompletionBlockWithSuccess:^(YTKBatchRequest *batchRequest) {
+ 
+     NSLog(@"succeed");
+ 
+     NSArray *requests = batchRequest.requestArray;
+     GetImageApi *a = (GetImageApi *)requests[0];
+     GetImageApi *b = (GetImageApi *)requests[1];
+     GetImageApi *c = (GetImageApi *)requests[2];
+ 
+     GetUserInfoApi *user = (GetUserInfoApi *)requests[3];
+         // deal with requests result ...
+     } failure:^(YTKBatchRequest *batchRequest) {
+         NSLog(@"failed");
+     }];
+ }
  */
 #import <Foundation/Foundation.h>
 

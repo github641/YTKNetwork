@@ -21,7 +21,46 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 /* lzy注170713：
- 链式请求，也就是请求之间互相依赖，串行发出。和批量请求相似的，通过一个YTKBatchRequestAgent来管理这些依赖的请求。内部通过_nextRequestIndex来索引正在进行和下一个将要处理的请求，每次上一个请求成功回调回来，才开始下一个链式的请求
+ 链式请求，也就是请求之间互相依赖，串行发出。和批量请求相似的，通过一个YTKBatchRequestAgent(数组)来管理这些依赖的请求。内部通过_nextRequestIndex来索引正在进行和下一个将要处理的请求，每次上一个请求成功回调回来，才开始下一个链式的请求
+ */
+/* lzy注170717：
+ 用于管理有相互依赖的网络请求，它实际上最终可以用来管理多个拓扑排序后的网络请求。
+ 
+ 例如，我们有一个需求，需要用户在注册时，先发送注册的 Api，
+ 然后 : * 如果注册成功，再发送读取用户信息的 Api。并且，读取用户信息的 Api 需要使用注册成功返回的用户 id 号。
+ * 如果注册失败，则不发送读取用户信息的 Api 了。
+ 
+ 以下是具体的代码示例，在示例中，我们在 sendChainRequest 方法中设置好了 Api 相互的依赖，然后。 我们就可以通过 chainRequestFinished 回调来处理所有网络请求都发送成功的逻辑了。如果有任何其中一个网络请求失败了，则会触发 chainRequestFailed 回调。
+ 
+ - (void)sendChainRequest {
+ RegisterApi *reg = [[RegisterApi alloc] initWithUsername:@"username" password:@"password"];
+ YTKChainRequest *chainReq = [[YTKChainRequest alloc] init];
+ 
+ [chainReq addRequest:reg callback:^(YTKChainRequest *chainRequest, YTKBaseRequest *baseRequest) {
+ 
+ RegisterApi *result = (RegisterApi *)baseRequest;
+ NSString *userId = [result userId];
+ 
+ GetUserInfoApi *api = [[GetUserInfoApi alloc] initWithUserId:userId];
+ 
+ [chainRequest addRequest:api callback:nil];
+ 
+ }];
+ 
+ chainReq.delegate = self;
+ 
+ // start to send request
+ [chainReq start];
+ 
+ }
+ 
+ - (void)chainRequestFinished:(YTKChainRequest *)chainRequest {
+ // all requests are done
+ }
+ 
+ - (void)chainRequestFailed:(YTKChainRequest *)chainRequest failedBaseRequest:(YTKBaseRequest*)request {
+ // some one of request is failed
+ }
  */
 #import <Foundation/Foundation.h>
 
@@ -51,11 +90,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/* lzy注170717：
+ 声明链式请求的回调block
+ */
 typedef void (^YTKChainCallback)(YTKChainRequest *chainRequest, YTKBaseRequest *baseRequest);
 
 ///  YTKBatchRequest can be used to chain several YTKRequest so that one will only starts after another finishes.
 ///  Note that when used inside YTKChainRequest, a single YTKRequest will have its own callback and delegate
 ///  cleared, in favor of the batch request callback.
+
 @interface YTKChainRequest : NSObject
 
 ///  All the requests are stored in this array.
