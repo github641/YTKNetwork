@@ -29,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///  YTKChainRequestAgent handles chain request management. It keeps track of all
 ///  the chain requests.
+/* lzy注170718：
+ 链式请求中介，处理链式请求的管理工作。持续追踪所有的链式请求。
+ */
 @interface YTKChainRequestAgent : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
