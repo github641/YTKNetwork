@@ -29,8 +29,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///  YTKBatchRequestAgent handles batch request management. It keeps track of all
 ///  the batch requests.
+/* lzy注170718：
+ 本类处理 多个 批量请求 的管理。追踪所有的 批量请求。
+ */
 @interface YTKBatchRequestAgent : NSObject
 
+/* lzy注170718：
+ 下面两个写法挺棒的，可以使用到sdk中。
+ */
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
