@@ -37,6 +37,20 @@
 
 @implementation YTKChainRequest
 
+/* lzy注170718：
+ 一般初始化方法，alloc init。
+ 
+ 这个类没有使用：
+ - (instancetype)init NS_UNAVAILABLE;
+ + (instancetype)new NS_UNAVAILABLE;
+ 
+ 初始化工作如下
+ 1、初始『下一个请求的索引』为0
+ 2、初始化存放所有请求的数组
+ 3、初始化存放请求的回调的数组
+ 4、初始化一个链式请求完成block
+ 
+ */
 - (instancetype)init {
     self = [super init];
     if (self) {
