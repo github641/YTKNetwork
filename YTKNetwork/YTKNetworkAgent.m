@@ -64,7 +64,7 @@
  2、创建AFHTTPSessionManager实例，使用的配置是前一步获取的config对象
  3、创建一个管理请求记录的字典requestsRecord
  4、创建一个并发队列，并设置给AFHTTPSessionManager实例的completionQueue回调队列
- 5、创建请求的可接受码 100-499，responseSerializer的可接受状态吗设置为此。
+ 5、创建请求的可接受码 100-499，responseSerializer的可接受状态码设置为此。
  6、创建互斥锁
  7、设置AFHTTPSessionManager实例的securityPolicy、responseSerializer为二进制、completionQueue为创建的并发队列
  */
@@ -249,6 +249,9 @@
     NSParameterAssert(request != nil);
 
     // 不理解这个关键字的作用，可以参看：https://stackoverflow.com/questions/13587742/nserror-and-autoreleasing
+    /* lzy注170821
+     在Ojbective-C高级编程一书中也有介绍。
+     */
     NSError * __autoreleasing requestSerializationError = nil;
 
     

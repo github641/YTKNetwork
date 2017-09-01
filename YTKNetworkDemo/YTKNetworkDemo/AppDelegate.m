@@ -21,10 +21,13 @@
     YTKNetworkConfig *config = [YTKNetworkConfig sharedConfig];
     YTKUrlArgumentsFilter *urlFilter = [YTKUrlArgumentsFilter filterWithArguments:@{@"version": appVersion}];
     [config addUrlFilter:urlFilter];
+    
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self setupRequestFilters];
+//    NSString *s = @"生物";
+//    NSLog(@"%s",s.UTF8String);
     return YES;
 }
 
