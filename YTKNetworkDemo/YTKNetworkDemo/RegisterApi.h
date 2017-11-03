@@ -7,11 +7,17 @@
 //
 
 #import "YTKRequest.h"
-
+/* lzy171103注:
+ 一般接口，出了全局参数之外的 普通请求参数
+ */
 @interface RegisterApi : YTKRequest
 
 - (id)initWithUsername:(NSString *)username password:(NSString *)password;
 
+
+/**
+ 返回数据中的userId字段的数据
+ */
 - (NSString *)userId;
 
 @end

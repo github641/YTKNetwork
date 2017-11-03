@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 #import "YTKNetworkConfig.h"
 #import "YTKBaseRequest.h"
-
+// 实现自己的 URL 拼接工具类
 /// 给url追加arguments，用于全局参数，比如AppVersion, ApiVersion等
 @interface YTKUrlArgumentsFilter : NSObject <YTKUrlFilterProtocol>
 

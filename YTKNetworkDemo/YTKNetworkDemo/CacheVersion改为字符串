@@ -1,0 +1,47 @@
+
+使用ytk的时候，传 integer、double、CGFloat似乎都会精度丢失，取出来的是整型。
+
+改version为字符串存取验证。
+
+
+在YTKRequest类中修改
+
+
+.h:
+
+- (NSString *)cacheVersion;
+
+//////////////////////////////
+
+.m
+
+250line
+- (NSString *)cacheVersion {
+return @"liuzhiyi";// 默认
+}
+
+CacheMetadata是缓存元数据信息
+75line
+@property (nonatomic, strong) NSString *version;// strong修饰
+
+[aCoder encodeObject:self.version forKey:NSStringFromSelector(@selector(version))];
+
+
+self.version = [aDecoder decodeObjectOfClass:[NSString class] forKey:NSStringFromSelector(@selector(version))];
+
+
+validateCacheWithError方法会验证 各元数据是否匹配
+360line
+// Version
+NSString *cacheVersionFileContent = self.cacheMetadata.version;
+NSString *cacheVersion = [self cacheVersion];
+if (cacheVersionFileContent || cacheVersion) {
+if (cacheVersionFileContent.length != cacheVersion.length || ![cacheVersionFileContent isEqualToString:cacheVersion]) {
+if (error) {
+*error = [NSError errorWithDomain:DksRequestCacheErrorDomain code:DksRequestCacheErrorVersionMismatch userInfo:@{ NSLocalizedDescriptionKey:@"Cache version mismatch"}];
+}
+return NO;
+}
+}
+
+

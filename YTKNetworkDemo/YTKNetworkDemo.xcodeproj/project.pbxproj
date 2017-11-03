@@ -17,6 +17,10 @@
 		45BF1D431A0DC40F00DDB7E0 /* GetUserInfoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1D421A0DC40F00DDB7E0 /* GetUserInfoApi.m */; };
 		45BF1D461A0DC66E00DDB7E0 /* GetImageApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1D451A0DC66E00DDB7E0 /* GetImageApi.m */; };
 		45F710841A466D01001957BA /* UploadImageApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F710831A466D01001957BA /* UploadImageApi.m */; };
+		84DCA24A1FAC20D100C8CA69 /* CacheVersion改为字符串 in Resources */ = {isa = PBXBuildFile; fileRef = 84DCA2491FAC20D100C8CA69 /* CacheVersion改为字符串 */; };
+		84DCA24D1FAC23C200C8CA69 /* SDKHotWorsApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DCA24C1FAC23C200C8CA69 /* SDKHotWorsApi.m */; };
+		84DCA2501FAC3A6A00C8CA69 /* E69856B1-B5F8-4D28-B99A-9740508BA2F2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DCA24E1FAC3A6900C8CA69 /* E69856B1-B5F8-4D28-B99A-9740508BA2F2.png */; };
+		84DCA2511FAC3A6A00C8CA69 /* 2548E303-E9EB-4A8D-B0AC-77A0EA7A3711.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DCA24F1FAC3A6A00C8CA69 /* 2548E303-E9EB-4A8D-B0AC-77A0EA7A3711.png */; };
 		BF007FD919FF972C00816462 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF007FD819FF972C00816462 /* main.m */; };
 		BF007FDC19FF972C00816462 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF007FDB19FF972C00816462 /* AppDelegate.m */; };
 		BF007FDF19FF972C00816462 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF007FDE19FF972C00816462 /* ViewController.m */; };
@@ -58,6 +62,11 @@
 		45F710831A466D01001957BA /* UploadImageApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadImageApi.m; sourceTree = "<group>"; };
 		573535265CF5ECF05E1BBD90 /* libPods-YTKNetworkDemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YTKNetworkDemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65526970D9E7FB74931FF110 /* Pods-YTKNetworkDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YTKNetworkDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-YTKNetworkDemoTests/Pods-YTKNetworkDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		84DCA2491FAC20D100C8CA69 /* CacheVersion改为字符串 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "CacheVersion改为字符串"; sourceTree = "<group>"; };
+		84DCA24B1FAC23C200C8CA69 /* SDKHotWorsApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDKHotWorsApi.h; sourceTree = "<group>"; };
+		84DCA24C1FAC23C200C8CA69 /* SDKHotWorsApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDKHotWorsApi.m; sourceTree = "<group>"; };
+		84DCA24E1FAC3A6900C8CA69 /* E69856B1-B5F8-4D28-B99A-9740508BA2F2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "E69856B1-B5F8-4D28-B99A-9740508BA2F2.png"; sourceTree = "<group>"; };
+		84DCA24F1FAC3A6A00C8CA69 /* 2548E303-E9EB-4A8D-B0AC-77A0EA7A3711.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2548E303-E9EB-4A8D-B0AC-77A0EA7A3711.png"; sourceTree = "<group>"; };
 		BF007FD319FF972C00816462 /* YTKNetworkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YTKNetworkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF007FD719FF972C00816462 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF007FD819FF972C00816462 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -147,14 +156,19 @@
 		BF007FD519FF972C00816462 /* YTKNetworkDemo */ = {
 			isa = PBXGroup;
 			children = (
+				84DCA24F1FAC3A6A00C8CA69 /* 2548E303-E9EB-4A8D-B0AC-77A0EA7A3711.png */,
+				84DCA24E1FAC3A6900C8CA69 /* E69856B1-B5F8-4D28-B99A-9740508BA2F2.png */,
 				45F710821A466D01001957BA /* UploadImageApi.h */,
 				45F710831A466D01001957BA /* UploadImageApi.m */,
 				45AB19BF1A4656A600680858 /* YTKUrlArgumentsFilter.h */,
 				45AB19C01A4656A600680858 /* YTKUrlArgumentsFilter.m */,
 				45BF1D3E1A0DC0A100DDB7E0 /* RegisterApi.h */,
 				45BF1D3F1A0DC0A100DDB7E0 /* RegisterApi.m */,
+				84DCA2491FAC20D100C8CA69 /* CacheVersion改为字符串 */,
 				45BF1D411A0DC40F00DDB7E0 /* GetUserInfoApi.h */,
 				45BF1D421A0DC40F00DDB7E0 /* GetUserInfoApi.m */,
+				84DCA24B1FAC23C200C8CA69 /* SDKHotWorsApi.h */,
+				84DCA24C1FAC23C200C8CA69 /* SDKHotWorsApi.m */,
 				45BF1D441A0DC66E00DDB7E0 /* GetImageApi.h */,
 				45BF1D451A0DC66E00DDB7E0 /* GetImageApi.m */,
 				BF007FDA19FF972C00816462 /* AppDelegate.h */,
@@ -290,8 +304,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84DCA2501FAC3A6A00C8CA69 /* E69856B1-B5F8-4D28-B99A-9740508BA2F2.png in Resources */,
 				BF007FE219FF972C00816462 /* Main.storyboard in Resources */,
+				84DCA24A1FAC20D100C8CA69 /* CacheVersion改为字符串 in Resources */,
 				BF007FE719FF972C00816462 /* LaunchScreen.xib in Resources */,
+				84DCA2511FAC3A6A00C8CA69 /* 2548E303-E9EB-4A8D-B0AC-77A0EA7A3711.png in Resources */,
 				BF007FE419FF972C00816462 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45BF1D461A0DC66E00DDB7E0 /* GetImageApi.m in Sources */,
+				84DCA24D1FAC23C200C8CA69 /* SDKHotWorsApi.m in Sources */,
 				BF007FDF19FF972C00816462 /* ViewController.m in Sources */,
 				20D2D9721D268808009E13A2 /* YTKAnimatingRequestAccessory.m in Sources */,
 				45AB19C11A4656A600680858 /* YTKUrlArgumentsFilter.m in Sources */,

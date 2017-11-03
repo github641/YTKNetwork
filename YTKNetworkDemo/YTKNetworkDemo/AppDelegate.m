@@ -17,14 +17,26 @@
 @implementation AppDelegate
 
 - (void)setupRequestFilters {
+    
+    #pragma mark - ================== YTKUrlFilterProtocol 接口 ==================
+    /* lzy171103注:
+     YTKUrlFilterProtocol 接口用于实现对网络请求 URL 或参数的重写，例如可以统一为网络请求加上一些参数，或者修改一些路径。
+     例如：在猿题库中，我们需要为每个网络请求加上客户端的版本号作为参数。所以我们实现了如下一个 YTKUrlArgumentsFilter类，实现了 YTKUrlFilterProtocol 接口 :
+     
+     通过以上 YTKUrlArgumentsFilter 类，我们就可以用以下代码方便地为网络请求增加统一的参数，如增加当前客户端的版本号：
+     */
+    
     NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     YTKNetworkConfig *config = [YTKNetworkConfig sharedConfig];
     YTKUrlArgumentsFilter *urlFilter = [YTKUrlArgumentsFilter filterWithArguments:@{@"version": appVersion}];
+    
     [config addUrlFilter:urlFilter];
     
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    #pragma mark - ================== 添加ytknetwork全局参数 ==================
     [self setupRequestFilters];
 //    NSString *s = @"生物";
 //    NSLog(@"%s",s.UTF8String);

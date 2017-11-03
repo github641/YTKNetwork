@@ -8,6 +8,12 @@
 
 #import "RegisterApi.h"
 
+/* lzy171103注:
+ * 我们通过覆盖 YTKRequest 类的 requestUrl 方法，实现了指定网址信息。并且我们只需要指定除去域名剩余的网址信息，因为域名信息在 YTKNetworkConfig 中已经设置过了。
+ * 我们通过覆盖 YTKRequest 类的 requestMethod 方法，实现了指定 POST 方法来传递参数。
+ * 我们通过覆盖 YTKRequest 类的 requestArgument 方法，提供了 POST 的信息。这里面的参数 username 和 password如果有一些特殊字符（如中文或空格），也会被自动编码。
+ */
+
 @implementation RegisterApi {
     NSString *_username;
     NSString *_password;
@@ -23,6 +29,10 @@
 }
 
 - (NSString *)requestUrl {
+    /* lzy171103注:
+     NSString *)requestUrl {
+     // “ http://www.yuantiku.com ” 在 YTKNetworkConfig 中设置，这里只填除去域名剩余的网址信息
+     */
     return @"/iphone/register";
 }
 
