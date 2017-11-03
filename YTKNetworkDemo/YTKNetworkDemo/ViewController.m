@@ -7,12 +7,49 @@
 /* lzy171103注:
  请求使用示例。
  
- YTKNetwork基础教程
- YTKNetworkConfig 类：用于统一设置网络请求的服务器和 CDN 的地址。
+ 添加xxtea。返回数据的 解密。
+ 
+ YTKNetworkAgent类的.m
+ - (void)handleRequestResult:(NSURLSessionTask *)task responseObject:(id)responseObject error:(NSError *)error
+ 
+  380line
+ 
+ #pragma mark - ================== xxtea ==================
+ // 调试
+ 
+ //        NSLog(@"原串:%@", @"ok");
+ 
+ //        NSData *data = [XXTEA encryptString:@"ok" stringKey:XXTEAKEYString sign:YES];
+ 
+ // 数据传输
+ 
+ NSData *decodeData = [ZYXXTEA decrypt:responseObject stringKey:@"key" sign:YES];
+ 
+ NSString *decodeString = [[NSString alloc] initWithData:decodeData encoding:NSUTF8StringEncoding];
+ 
+ DebugLog(@"decodeString:%@", decodeString);
  
  
- 
- YTKNetwork高级教程
+ request.responseObject = decodeData;
+ // 返回数据若是二进制数据
+ if ([request.responseObject isKindOfClass:[NSData class]]) {
+ request.responseData = decodeData;
+ request.responseString = [[NSString alloc] initWithData:decodeData encoding:[DksNetworkUtils stringEncodingWithRequest:request]];
+ // 根据响应序列化类型，处理返回数据
+ switch (request.responseSerializerType) {
+ case DksResponseSerializerTypeHTTP:
+ // Default serializer. Do nothing.
+ break;
+ case DksResponseSerializerTypeJSON:
+ request.responseObject = [self.jsonResponseSerializer responseObjectForResponse:task.response data:request.responseData error:&serializationError];
+ request.responseJSONObject = request.responseObject;
+ break;
+ case DksResponseSerializerTypeXMLParser:
+ request.responseObject = [self.xmlParserResponseSerialzier responseObjectForResponse:task.response data:request.responseData error:&serializationError];
+ break;
+ }
+ }
+
  */
 
 #import "ViewController.h"
